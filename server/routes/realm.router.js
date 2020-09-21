@@ -42,77 +42,87 @@ router.get('/get-realm/:realm', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-router.get('/get-realm-sections/:realm', rejectUnauthenticated, async (req, res) => {
-  const connection = await pool.connect();
+router.get(
+  '/get-realm-sections/:realm',
+  rejectUnauthenticated,
+  async (req, res) => {
+    const connection = await pool.connect();
 
-  try {
-    await connection.query('BEGIN');
-    const queryText = `SELECT * FROM "realm"
+    try {
+      await connection.query('BEGIN');
+      const queryText = `SELECT * FROM "realm"
     WHERE "realm"."id"= $1
     ORDER BY "realm"."id" ASC;`;
-    const queryValue = [req.params.realm];
-    let result = await connection.query(queryText, queryValue);
+      const queryValue = [req.params.realm];
+      let result = await connection.query(queryText, queryValue);
 
-    // Get the sections for that realm
-    const orderSectionQuery = `SELECT * FROM "section_order"
+      // Get the sections for that realm
+      const orderSectionQuery = `SELECT * FROM "section_order"
     WHERE "realm_id" = $1
     ORDER BY "index" ASC;`;
-    let section = await connection.query(orderSectionQuery, [req.params.realm]);
+      let section = await connection.query(orderSectionQuery, [
+        req.params.realm,
+      ]);
 
-    // Append the sections onto the result
-    result.rows[0].section = section.rows;
+      // Append the sections onto the result
+      result.rows[0].section = section.rows;
 
-    await connection.query('COMMIT');
+      await connection.query('COMMIT');
 
-    res.send(result.rows[0]);
-  } catch (err) {
-    console.log('error on DELETE', err);
-    await connection.query('ROLLBACK');
-    res.sendStatus(500);
-  } finally {
-    connection.release();
+      res.send(result.rows[0]);
+    } catch (err) {
+      console.log('error on DELETE', err);
+      await connection.query('ROLLBACK');
+      res.sendStatus(500);
+    } finally {
+      connection.release();
+    }
   }
-});
+);
 
-router.delete('/remove/:realm', rejectUnauthenticatedAdmin, async (req, res) => {
-  const realmId = req.params.realm;
-  console.log('Deleting RealmID:', realmId);
-  const connection = await pool.connect();
-  try {
-    await connection.query('BEGIN');
+router.delete(
+  '/remove/:realm',
+  rejectUnauthenticatedAdmin,
+  async (req, res) => {
+    const realmId = req.params.realm;
+    console.log('Deleting RealmID:', realmId);
+    const connection = await pool.connect();
+    try {
+      await connection.query('BEGIN');
 
-    const removeRealmQuery = `DELETE FROM "realm"
+      const removeRealmQuery = `DELETE FROM "realm"
     WHERE "realm"."id" = $1`;
 
-    await connection.query(removeRealmQuery, [realmId]);
+      await connection.query(removeRealmQuery, [realmId]);
 
-    const removeSectionOrderQuery = `DELETE FROM "section_order"
+      const removeSectionOrderQuery = `DELETE FROM "section_order"
     WHERE "realm_id" = $1`;
 
-    await connection.query(removeSectionOrderQuery, [realmId]);
+      await connection.query(removeSectionOrderQuery, [realmId]);
 
-    const removeProgressQuery = `DELETE FROM "student_progress"
+      const removeProgressQuery = `DELETE FROM "student_progress"
     WHERE "realm_id" = $1`;
 
-    await connection.query(removeProgressQuery, [realmId]);
+      await connection.query(removeProgressQuery, [realmId]);
 
-    await connection.query('COMMIT');
-    console.log('DELETE successful');
-    res.sendStatus(200);
-  } catch (err) {
-    console.log('error on DELETE', err);
-    await connection.query('ROLLBACK');
-    res.sendStatus(500);
-  } finally {
-    connection.release();
+      await connection.query('COMMIT');
+      console.log('DELETE successful');
+      res.sendStatus(200);
+    } catch (err) {
+      console.log('error on DELETE', err);
+      await connection.query('ROLLBACK');
+      res.sendStatus(500);
+    } finally {
+      connection.release();
+    }
+
+    // delete from "realm"  "section_order" "student_progress"
   }
-
-  // delete from "realm"  "section_order" "student_progress"
-});
+);
 
 //GETTING ALL REALMS FOR "VIEW REALMS" PAGE
 // router.get('/all', (req, res) => {
-router.get("/all", rejectUnauthenticated, (req, res) => {
+router.get('/all', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * FROM "realm"
   ORDER BY "realm"."id" ASC;`;
 
