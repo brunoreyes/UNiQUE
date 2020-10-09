@@ -2,11 +2,19 @@
 
 ### Built By:
 
-Mase Santos, Tom Hoffmann, Carl Wilcoxon and Bruno Reyes
+Bruno Reyes, Tom Hoffmann, Carl Wilcoxon and Mase Santos
 
 >Duration: Two Week Sprint, Client Project
 
-### Video Link to Demo:
+### View Demo [Here](http://www.uniquerealmapp.com/)
+
+### User View
+
+![User View](uniqueMobile.gif)
+
+### Admin View
+
+![Admin View](uniqueAdmin.gif)
 
 ## What is Realm Unlimited?
 Realm Unlimited is a health and wellness startup consulting company founded by Kara Hirdman and Krystal Queen. Their mission statement is “To educate current and future leaders in the use of best practices and strategies to create happy and healthy cultures.” 
@@ -38,8 +46,6 @@ In “Realms,” an administrator can view all realms, or courses, in their syst
 In “Sections,” an administrator can similarly see all sections, or lessons, in their system. Sections can be viewed, with their type marked by a video, text or image icon. They can also be added and deleted if necessary. By clicking “+ New Section,” a user can post a new text, image or video section. Youtube and Ted Talk videos are supported. Edits can also be made to sections, as all updates will be reflected in the database.
 
 Finally, in “Statistics,” a minimalistic page holds three buttons that will download CSV (spreadsheet) files of their prospective data: “Curriculum” information, “Demographics” of the users, and “Feedback” from general user input. These have all been provided so that the client can better understand who they’re serving.
-
-## Scope and Wireframe
 
 
 ## Installation

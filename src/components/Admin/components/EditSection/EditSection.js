@@ -188,25 +188,25 @@ class EditSection extends Component {
                         {this.state.preview && this.state.videoLink !== '' ? (
                           <FormControl className={classes.formContainerVideo}>
                             {' '}
-                            <Fade>
-                              <h1 className={classes.previewTitle}>
+                            {/* <Fade> */}
+                            {/* <h1 className={classes.previewTitle}>
                                 Resource Preview
-                              </h1>
-                              <div className={classes.sectionVideoContainer}>
-                                <iframe
-                                  title={'section video'}
-                                  frameborder="0"
-                                  className={classes.sectionVideo}
-                                  // src="https://www.youtube.com/embed/pRFXSjkpKWA"
-                                  src={
-                                    this.state.videoLink
-                                      .replace('watch?v=', 'embed/')
-                                      .split('&feature=emb_title')[0]
-                                  }
-                                  // https://www.youtube.com/watch?v=pRFXSjkpKWA&feature=emb_title
-                                ></iframe>
-                              </div>{' '}
-                            </Fade>
+                              </h1> */}
+                            <div className={classes.sectionVideoContainer}>
+                              <iframe
+                                title={'section video'}
+                                frameborder="0"
+                                className={classes.sectionVideo}
+                                // src="https://www.youtube.com/embed/pRFXSjkpKWA"
+                                src={
+                                  this.state.videoLink
+                                    .replace('watch?v=', 'embed/')
+                                    .split('&feature=emb_title')[0]
+                                }
+                                // https://www.youtube.com/watch?v=pRFXSjkpKWA&feature=emb_title
+                              ></iframe>
+                            </div>{' '}
+                            {/* </Fade> */}
                           </FormControl>
                         ) : (
                           <></>
